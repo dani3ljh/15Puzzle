@@ -7,9 +7,11 @@ using UnityEngine;
 public class BoardManager : MonoBehaviour
 {
 	[Header("Board")]
+	[SerializeField] private int shuffleCount;
 	[SerializeField] private int width;
 	[SerializeField] private int height;
 	[SerializeField] private Vector2 backgroundSize;
+	[SerializeField] private bool shuffleOnStart;
 
 	[Header("Canvas")]
 	[SerializeField] private RectTransform background;
@@ -22,6 +24,52 @@ public class BoardManager : MonoBehaviour
 
 	private void Start()
 	{
+		ResetBoard();
+
+		// Shuffle with animation
+		if (shuffleOnStart)
+			StartCoroutine(ShuffleAnimate());
+	}
+
+	private void Update()
+	{
+		(Tile tile, Vector2Int from, Vector2Int to)? move = null;
+
+		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+			move = logic.MoveUp();
+		else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+			move = logic.MoveDown();
+		else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+			move = logic.MoveLeft();
+		else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+			move = logic.MoveRight();
+		else if (Input.GetKeyDown(KeyCode.R))
+		{
+			ResetBoard();
+			StartCoroutine(ShuffleAnimate());
+		}
+
+		if (move.HasValue)
+		{
+			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
+		}
+	}
+
+	private void ResetBoard()
+	{
+		if (logic != null)
+		{
+			for (int y = 0; y < logic.board.GetLength(0); y++)
+			{
+				for (int x = 0; x < logic.board.GetLength(1); x++)
+				{
+					if (logic.board[y, x])
+						Destroy(logic.board[y, x].gameObject);
+				}
+			}
+			logic = null;
+		}
+
 		if (height <= 0 || width <= 0)
 			throw new Exception("Board Size improper size");
 
@@ -49,28 +97,6 @@ public class BoardManager : MonoBehaviour
 			SetTileInstant(tile, x, y);
 			tile.UpdateColor(width);
 		}
-
-		// Shuffle with animation
-		StartCoroutine(ShuffleAnimate());
-	}
-
-	private void Update()
-	{
-		(Tile tile, Vector2Int from, Vector2Int to)? move = null;
-
-		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-			move = logic.MoveUp();
-		else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-			move = logic.MoveDown();
-		else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-			move = logic.MoveLeft();
-		else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-			move = logic.MoveRight();
-
-		if (move.HasValue)
-		{
-			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
-		}
 	}
 
 	private void HandleMove(Tile tile, Vector2Int from, Vector2Int to)
@@ -86,7 +112,7 @@ public class BoardManager : MonoBehaviour
 
 	private IEnumerator ShuffleAnimate()
 	{
-		logic.ShuffleByRandomMoves();
+		logic.ShuffleByRandomMoves(shuffleCount);
 
 		// Animate all tiles to their shuffled positions
 		for (int y = 0; y < height; y++)

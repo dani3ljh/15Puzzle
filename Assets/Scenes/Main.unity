@@ -525,6 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c6c61a3aa10754a93b2c2b61e98fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shuffleCount: 200
   width: 4
   height: 4
   backgroundSize: {x: 400, y: 400}
