@@ -8,6 +8,16 @@ public class LogicManager
 	private int width;
 	private int height;
 
+	public int GetWidth()
+	{
+		return width;
+	}
+
+	public int GetHeight()
+	{
+		return height;
+	}
+
 	public LogicManager(int width, int height)
 	{
 		this.width = width;
@@ -47,6 +57,22 @@ public class LogicManager
 		board[target.y, target.x] = null;
 
 		return (movingTile, target, gap);
+	}
+
+	public bool CheckWin()
+	{
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				if (board[y, x] == null)
+					continue;
+				if (!board[y, x].GetCorrect(width))
+					return false;
+			}
+		}
+
+		return true;
 	}
 
 	public (Tile, Vector2Int, Vector2Int)? MoveUp() => TryMove(Vector2Int.up);

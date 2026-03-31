@@ -55,6 +55,7 @@ MonoBehaviour:
   label: {fileID: 327693082666562007}
   correctColor: {r: 0.22883442, g: 0.7169812, b: 0.19615515, a: 1}
   normalColor: {r: 0, g: 0, b: 0, a: 1}
+  background: {fileID: 8621024851046499184}
   x: 0
   y: 0
 --- !u!222 &6185298275201058966

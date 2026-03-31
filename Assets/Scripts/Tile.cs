@@ -9,23 +9,12 @@ public class Tile : MonoBehaviour
 	[SerializeField] private Text label;
 	[SerializeField] private Color correctColor;
 	[SerializeField] private Color normalColor;
+	[SerializeField] private Image background;
 
 	[HideInInspector] public int x;
 	[HideInInspector] public int y;
 
 	private int number;
-
-	// Start is called before the first frame update
-	void Start()
-	{
-
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
 
 	public void SetNumber(int number)
 	{
@@ -38,18 +27,21 @@ public class Tile : MonoBehaviour
 		return number;
 	}
 
-	public void UpdateColor(int width)
+	public bool GetCorrect(int width)
 	{
 		int correctX = (number - 1) % width;
 		int correctY = (number - 1) / width;
 
-		if (x == correctX && y == correctY)
-		{
-			label.color = correctColor;
-		}
-		else
-		{
-			label.color = normalColor;
-		}
+		return x == correctX && y == correctY;
+	}
+
+	public void UpdateLabelColor(int width)
+	{
+		label.color = GetCorrect(width) ? correctColor : normalColor;
+	}
+
+	public void SetBackgroundColor(Color color)
+	{
+		background.color = color;
 	}
 }

@@ -12,15 +12,21 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private int height;
 	[SerializeField] private Vector2 backgroundSize;
 	[SerializeField] private bool shuffleOnStart;
+	
+	[Header("Colors (width + height - 2)")]
+	[SerializeField] private Color[] groupColors;
 
 	[Header("Canvas")]
 	[SerializeField] private RectTransform background;
 	[SerializeField] private Transform tileFolder;
 	[SerializeField] private GameObject tilePrefab;
 
-	private LogicManager logic;
+	[Header("Win Effect")]
+	[SerializeField] private ParticleSystem[] confetti;
 
+	private LogicManager logic;
 	private Dictionary<Tile, Coroutine> activeAnimations = new Dictionary<Tile, Coroutine>();
+	private bool hasWon;
 
 	private void Start()
 	{
@@ -47,11 +53,34 @@ public class BoardManager : MonoBehaviour
 		{
 			ResetBoard();
 			StartCoroutine(ShuffleAnimate());
+			if (logic.CheckWin())
+				UpdateWon(true);
+			else
+				UpdateWon(false);
 		}
 
-		if (move.HasValue)
+		if (move != null)
 		{
 			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
+			if (move.Value.tile.GetCorrect(logic.GetWidth()))
+			{
+				if (logic.CheckWin())
+					UpdateWon(true);
+			}
+			else if (hasWon)
+				UpdateWon(false);
+		}
+	}
+
+	private void UpdateWon(bool win)
+	{
+		hasWon = win;
+		for (int i = 0; i <confetti.Length; i++)
+		{
+			if (win)
+				confetti[i].Play();
+			else
+				confetti[i].Stop();
 		}
 	}
 
@@ -91,11 +120,21 @@ public class BoardManager : MonoBehaviour
 			tile.gameObject.name = $"Tile {i}";
 			tile.x = x;
 			tile.y = y;
+			
+			for (int j = 0; j < groupColors.Length; j++)
+			{
+				// first row then first column
+				if (j % 2 == 0 && y == j / 2 || j % 2 == 1 && x == j / 2)
+				{
+					tile.SetBackgroundColor(groupColors[j]);
+					break;
+				}
+			}
 
 			logic.board[y, x] = tile;
 
 			SetTileInstant(tile, x, y);
-			tile.UpdateColor(width);
+			tile.UpdateLabelColor(width);
 		}
 	}
 
@@ -107,7 +146,7 @@ public class BoardManager : MonoBehaviour
 		Vector2 targetPos = GetTilePosition(to.x, to.y);
 		PlayTileAnimation(tile, targetPos, 0.15f);
 
-		tile.UpdateColor(width);
+		tile.UpdateLabelColor(width);
 	}
 
 	private IEnumerator ShuffleAnimate()
@@ -127,7 +166,7 @@ public class BoardManager : MonoBehaviour
 
 				Vector2 targetPos = GetTilePosition(x, y);
 				PlayTileAnimation(tile, targetPos, 0.3f); // slower for shuffle effect
-				tile.UpdateColor(width);
+				tile.UpdateLabelColor(width);
 			}
 		}
 
