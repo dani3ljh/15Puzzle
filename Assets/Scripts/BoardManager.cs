@@ -26,9 +26,12 @@ public class BoardManager : MonoBehaviour
 	private LogicManager logic;
 	private Dictionary<Tile, Coroutine> activeAnimations = new();
 	private List<Color> groupColors;
+	private List<(Tile tile, Vector2Int from, Vector2Int to)?> moveQueue;
 
 	private void Start()
 	{
+		moveQueue = new();
+
 		ResetBoard();
 
 		// Shuffle with animation
@@ -38,39 +41,80 @@ public class BoardManager : MonoBehaviour
 
 	private void Update()
 	{
-		(Tile tile, Vector2Int from, Vector2Int to)? move = null;
-
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-			move = logic.MoveUp();
+			moveQueue.Add(logic.MoveUp());
 		else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-			move = logic.MoveDown();
+			moveQueue.Add(logic.MoveDown());
 		else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-			move = logic.MoveLeft();
+			moveQueue.Add(logic.MoveLeft());
 		else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-			move = logic.MoveRight();
+			moveQueue.Add(logic.MoveRight());
 		else if (Input.GetKeyDown(KeyCode.R))
 		{
 			ResetBoard();
 			StartCoroutine(ShuffleAnimate());
 			if (logic.CheckWin())
-				Win();
+				WinEffect();
 		}
 
-		if (move != null)
+		if (moveQueue.Count > 0)
 		{
+			(Tile tile, Vector2Int from, Vector2Int to)? move = moveQueue[0];
+			moveQueue.RemoveAt(0);
+
+			if (move == null)
+				return;
+
 			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
 			if (move.Value.tile.GetCorrect(logic.GetWidth()))
 			{
 				if (logic.CheckWin())
-					Win();
+					WinEffect();
 			}
 		}
 	}
 
-	private void Win()
+	private void WinEffect()
 	{
 		for (int i = 0; i <confetti.Length; i++)
 			confetti[i].Play();
+	}
+
+	public void ButtonPress(int x, int y)
+	{
+		Vector2Int gapIndicies = logic.GetGapIndices();
+
+		// print($"pressing button ({x}, {y}), gap: {gapIndicies}");
+
+		if (x != gapIndicies.x && y != gapIndicies.y)
+			return;
+		
+		if (x == gapIndicies.x)
+		{
+			if (y < gapIndicies.y)
+			{
+				for (int i = 0; i < gapIndicies.y - y; i++)
+					moveQueue.Add(logic.MoveDown());
+			}
+			else
+			{
+				for (int i = 0; i < y - gapIndicies.y; i++)
+					moveQueue.Add(logic.MoveUp());
+			}
+		}
+		else
+		{
+			if (x < gapIndicies.x)
+			{
+				for (int i = 0; i < gapIndicies.x - x; i++)
+					moveQueue.Add(logic.MoveRight());
+			}
+			else
+			{
+				for (int i = 0; i < x - gapIndicies.x; i++)
+					moveQueue.Add(logic.MoveLeft());
+			}
+		}
 	}
 	
 	private List<Color> GenerateGroupColors(int count)
@@ -125,9 +169,11 @@ public class BoardManager : MonoBehaviour
 			Tile tile = Instantiate(tilePrefab, tileFolder).GetComponent<Tile>();
 			tile.SetNumber(i);
 			tile.gameObject.name = $"Tile {i}";
+			tile.board = this;
 			tile.x = x;
 			tile.y = y;
 			
+			// Assign group colors
 			for (int j = 0; j < groupColors.Count; j++)
 			{
 				// first row then first column

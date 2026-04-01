@@ -31,7 +31,7 @@ public class LogicManager
 		shuffler = new(this);
 	}
 
-	private Vector2Int GetGapIndices()
+	public Vector2Int GetGapIndices()
 	{
 		for (int y = 0; y < height; y++)
 		{

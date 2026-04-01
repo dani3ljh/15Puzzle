@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour
 	[SerializeField] private Color normalColor;
 	[SerializeField] private Image background;
 
+	[HideInInspector] public BoardManager board;
 	[HideInInspector] public int x;
 	[HideInInspector] public int y;
 
@@ -44,4 +45,6 @@ public class Tile : MonoBehaviour
 	{
 		background.color = color;
 	}
+
+	public void OnButtonPressed() => board.ButtonPress(x, y);
 }
