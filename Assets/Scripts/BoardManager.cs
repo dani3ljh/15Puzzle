@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// Handles UI and animations for the puzzle
+/// </summary>
 public class BoardManager : MonoBehaviour
 {
 	[Header("Board")]
-	[SerializeField] private int shuffleCount;
 	[SerializeField] private int width;
 	[SerializeField] private int height;
 	[SerializeField] private Vector2 backgroundSize;
 	[SerializeField] private bool shuffleOnStart;
-	
-	[Header("Colors (width + height - 2)")]
-	[SerializeField] private Color[] groupColors;
 
 	[Header("Canvas")]
 	[SerializeField] private RectTransform background;
@@ -25,8 +24,8 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private ParticleSystem[] confetti;
 
 	private LogicManager logic;
-	private Dictionary<Tile, Coroutine> activeAnimations = new Dictionary<Tile, Coroutine>();
-	private bool hasWon;
+	private Dictionary<Tile, Coroutine> activeAnimations = new();
+	private List<Color> groupColors;
 
 	private void Start()
 	{
@@ -54,9 +53,7 @@ public class BoardManager : MonoBehaviour
 			ResetBoard();
 			StartCoroutine(ShuffleAnimate());
 			if (logic.CheckWin())
-				UpdateWon(true);
-			else
-				UpdateWon(false);
+				Win();
 		}
 
 		if (move != null)
@@ -65,23 +62,31 @@ public class BoardManager : MonoBehaviour
 			if (move.Value.tile.GetCorrect(logic.GetWidth()))
 			{
 				if (logic.CheckWin())
-					UpdateWon(true);
+					Win();
 			}
-			else if (hasWon)
-				UpdateWon(false);
 		}
 	}
 
-	private void UpdateWon(bool win)
+	private void Win()
 	{
-		hasWon = win;
 		for (int i = 0; i <confetti.Length; i++)
+			confetti[i].Play();
+	}
+	
+	private List<Color> GenerateGroupColors(int count)
+	{
+		List<Color> colors = new();
+		
+		for (int i = 0; i < count; i++)
 		{
-			if (win)
-				confetti[i].Play();
-			else
-				confetti[i].Stop();
+			float hue = (float)i / count;
+			float saturation = 0.9f;
+			float value = 0.8f;
+			
+			colors.Add(Color.HSVToRGB(hue, saturation, value));
 		}
+		
+		return colors;
 	}
 
 	private void ResetBoard()
@@ -108,6 +113,8 @@ public class BoardManager : MonoBehaviour
 			throw new Exception("Background Size improper size");
 
 		background.sizeDelta = backgroundSize;
+		
+		groupColors = GenerateGroupColors(width + height - 2);
 
 		// Create tiles
 		for (int i = 1; i < width * height; i++)
@@ -121,7 +128,7 @@ public class BoardManager : MonoBehaviour
 			tile.x = x;
 			tile.y = y;
 			
-			for (int j = 0; j < groupColors.Length; j++)
+			for (int j = 0; j < groupColors.Count; j++)
 			{
 				// first row then first column
 				if (j % 2 == 0 && y == j / 2 || j % 2 == 1 && x == j / 2)
@@ -151,7 +158,7 @@ public class BoardManager : MonoBehaviour
 
 	private IEnumerator ShuffleAnimate()
 	{
-		logic.ShuffleByRandomMoves(shuffleCount);
+		logic.Shuffle();
 
 		// Animate all tiles to their shuffled positions
 		for (int y = 0; y < height; y++)
@@ -205,7 +212,7 @@ public class BoardManager : MonoBehaviour
 		if (activeAnimations.ContainsKey(tile))
 		{
 			StopCoroutine(activeAnimations[tile]);
-			rect.anchoredPosition = targetPos;
+			// rect.anchoredPosition = targetPos;
 			activeAnimations.Remove(tile);
 		}
 

@@ -1,9 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles the GameObject representing a tile in the puzzle
+/// </summary>
 public class Tile : MonoBehaviour
 {
 	[SerializeField] private Text label;
