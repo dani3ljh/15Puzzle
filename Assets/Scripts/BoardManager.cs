@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Handles UI and animations for the puzzle
@@ -17,6 +18,13 @@ public class BoardManager : MonoBehaviour
 	[Header("Canvas")]
 	[SerializeField] private RectTransform background;
 	[SerializeField] private Transform tileFolder;
+	[SerializeField] private TMP_Text timer;
+
+	[Header("Timer Colors")]
+	[SerializeField] private Color normalColor;
+	[SerializeField] private Color finishedColor;
+
+	[Header("Prefabs")]
 	[SerializeField] private GameObject tilePrefab;
 
 	[Header("Win Effect")]
@@ -26,6 +34,9 @@ public class BoardManager : MonoBehaviour
 	private Dictionary<Tile, Coroutine> activeAnimations = new();
 	private List<Color> groupColors;
 	private List<(Tile tile, Vector2Int from, Vector2Int to)?> moveQueue;
+	private float timeElapsed = 0;
+	private bool hasShuffled;
+	private bool timerRunning;
 
 	private void Start()
 	{
@@ -40,6 +51,14 @@ public class BoardManager : MonoBehaviour
 
 	private void Update()
 	{
+		if (timerRunning)
+		{
+			timeElapsed += Time.deltaTime;
+			int minutes = (int)timeElapsed / 60;
+			float seconds = timeElapsed - minutes;
+			timer.text = $"{minutes:D2}:{seconds:F1}";
+		}
+
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
 			moveQueue.Add(logic.MoveUp());
 		else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
@@ -60,18 +79,21 @@ public class BoardManager : MonoBehaviour
 
 			if (move == null)
 				return;
+			
+			if (hasShuffled && !timerRunning)
+				timerRunning = true;
 
 			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
-			if (move.Value.tile.GetCorrect(logic.GetWidth()))
-			{
-				if (logic.CheckWin())
-					WinEffect();
-			}
+
+			if (move.Value.tile.GetCorrect(logic.GetWidth()) && logic.CheckWin() && hasShuffled)
+				Win();
 		}
 	}
 
-	private void WinEffect()
+	private void Win()
 	{
+		timerRunning = false;
+		timer.color = finishedColor;
 		for (int i = 0; i <confetti.Length; i++)
 			confetti[i].Play();
 	}
@@ -131,13 +153,23 @@ public class BoardManager : MonoBehaviour
 
 	public void ShuffleBoard()
 	{
+		hasShuffled = true;
+		timeElapsed = 0;
+		timer.text = "00:00.0";
+		timer.color = normalColor;
 		StartCoroutine(ShuffleAnimate());
 		if (logic.CheckWin())
-			WinEffect();
+			Win();
 	}
 
 	public void ResetBoard()
 	{
+		hasShuffled = false;
+		timeElapsed = 0;
+		timerRunning = false;
+		timer.text = "00:00.0";
+		timer.color = normalColor;
+
 		if (logic != null)
 		{
 			for (int y = 0; y < logic.board.GetLength(0); y++)
