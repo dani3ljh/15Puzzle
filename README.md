@@ -1,3 +1,9 @@
 # 15Puzzle
 
-Digital Version of a 15 puzzle (wasd/arrow keys to move, r to shuffle)
+Digital Version of a 15 puzzle
+
+## Keybinds
+
+wasd/arrow keys: move tiles
+r: reset to solved state
+t: shuffle board

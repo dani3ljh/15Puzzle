@@ -12,7 +12,6 @@ public class BoardManager : MonoBehaviour
 	[Header("Board")]
 	[SerializeField] private int width;
 	[SerializeField] private int height;
-	[SerializeField] private Vector2 backgroundSize;
 	[SerializeField] private bool shuffleOnStart;
 
 	[Header("Canvas")]
@@ -36,7 +35,7 @@ public class BoardManager : MonoBehaviour
 
 		// Shuffle with animation
 		if (shuffleOnStart)
-			StartCoroutine(ShuffleAnimate());
+			ShuffleBoard();
 	}
 
 	private void Update()
@@ -50,12 +49,9 @@ public class BoardManager : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 			moveQueue.Add(logic.MoveRight());
 		else if (Input.GetKeyDown(KeyCode.R))
-		{
 			ResetBoard();
-			StartCoroutine(ShuffleAnimate());
-			if (logic.CheckWin())
-				WinEffect();
-		}
+		else if (Input.GetKeyDown(KeyCode.T))
+			ShuffleBoard();
 
 		if (moveQueue.Count > 0)
 		{
@@ -133,7 +129,14 @@ public class BoardManager : MonoBehaviour
 		return colors;
 	}
 
-	private void ResetBoard()
+	public void ShuffleBoard()
+	{
+		StartCoroutine(ShuffleAnimate());
+		if (logic.CheckWin())
+			WinEffect();
+	}
+
+	public void ResetBoard()
 	{
 		if (logic != null)
 		{
@@ -153,11 +156,9 @@ public class BoardManager : MonoBehaviour
 
 		logic = new LogicManager(width, height);
 
-		if (backgroundSize.x <= 0 || backgroundSize.y <= 0)
+		if (background.sizeDelta.x <= 0 || background.sizeDelta.y <= 0)
 			throw new Exception("Background Size improper size");
 
-		background.sizeDelta = backgroundSize;
-		
 		groupColors = GenerateGroupColors(width + height - 2);
 
 		// Create tiles
@@ -230,11 +231,11 @@ public class BoardManager : MonoBehaviour
 
 	private Vector2 GetTilePosition(int x, int y)
 	{
-		float tileWidth = backgroundSize.x / width;
-		float tileHeight = backgroundSize.y / height;
+		float tileWidth = background.sizeDelta.x / width;
+		float tileHeight = background.sizeDelta.y / height;
 
-		float posX = -backgroundSize.x / 2f + tileWidth / 2f + x * tileWidth;
-		float posY = backgroundSize.y / 2f - tileHeight / 2f - y * tileHeight;
+		float posX = -background.sizeDelta.x / 2f + tileWidth / 2f + x * tileWidth;
+		float posY = background.sizeDelta.y / 2f - tileHeight / 2f - y * tileHeight;
 
 		return new Vector2(posX, posY);
 	}
@@ -242,8 +243,8 @@ public class BoardManager : MonoBehaviour
 	private void SetTileInstant(Tile tile, int x, int y)
 	{
 		RectTransform rect = tile.GetComponent<RectTransform>();
-		float tileWidth = backgroundSize.x / width;
-		float tileHeight = backgroundSize.y / height;
+		float tileWidth = background.sizeDelta.x / width;
+		float tileHeight = background.sizeDelta.y / height;
 
 		rect.localScale = Vector3.one;
 		rect.sizeDelta = new Vector2(tileWidth, tileHeight);

@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Handles the GameObject representing a tile in the puzzle
 /// </summary>
 public class Tile : MonoBehaviour
 {
-	[SerializeField] private Text label;
+	[SerializeField] private TMP_Text label;
 	[SerializeField] private Color correctColor;
 	[SerializeField] private Color normalColor;
 	[SerializeField] private Image background;
