@@ -31,6 +31,30 @@ public class LogicManager
 		shuffler = new(this);
 	}
 
+	public void ResetToSolved()
+	{
+		Tile[,] newBoard = new Tile[height, width];
+
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				Tile tile = board[y, x];
+				if (tile == null)
+					continue;
+
+				int number = tile.GetNumber();
+
+				int correctX = (number - 1) % width;
+				int correctY = (number - 1) / width;
+
+				newBoard[correctY, correctX] = tile;
+			}
+		}
+
+		board = newBoard;
+	}
+
 	public Vector2Int GetGapIndices()
 	{
 		for (int y = 0; y < height; y++)

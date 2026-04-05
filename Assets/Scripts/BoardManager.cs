@@ -54,9 +54,9 @@ public class BoardManager : MonoBehaviour
 		if (timerRunning)
 		{
 			timeElapsed += Time.deltaTime;
-			int minutes = (int)timeElapsed / 60;
-			float seconds = timeElapsed - minutes;
-			timer.text = $"{minutes:D2}:{seconds:F1}";
+			int minutes = (int)(timeElapsed / 60);
+			float seconds = timeElapsed % 60;
+			timer.text = $"{minutes:D2}:{seconds:00.0}";
 		}
 
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -92,6 +92,7 @@ public class BoardManager : MonoBehaviour
 
 	private void Win()
 	{
+		hasShuffled = false;
 		timerRunning = false;
 		timer.color = finishedColor;
 		for (int i = 0; i <confetti.Length; i++)
@@ -155,9 +156,12 @@ public class BoardManager : MonoBehaviour
 	{
 		hasShuffled = true;
 		timeElapsed = 0;
+		timerRunning = false;
 		timer.text = "00:00.0";
 		timer.color = normalColor;
+		
 		StartCoroutine(ShuffleAnimate());
+
 		if (logic.CheckWin())
 			Win();
 	}
@@ -170,19 +174,17 @@ public class BoardManager : MonoBehaviour
 		timer.text = "00:00.0";
 		timer.color = normalColor;
 
-		if (logic != null)
+		if (logic == null)
 		{
-			for (int y = 0; y < logic.board.GetLength(0); y++)
-			{
-				for (int x = 0; x < logic.board.GetLength(1); x++)
-				{
-					if (logic.board[y, x])
-						Destroy(logic.board[y, x].gameObject);
-				}
-			}
-			logic = null;
+			InitializeBoard();
+			return;
 		}
 
+		StartCoroutine(ResetAnimate());
+	}
+	
+	private void InitializeBoard()
+	{
 		if (height <= 0 || width <= 0)
 			throw new Exception("Board Size improper size");
 
@@ -193,7 +195,6 @@ public class BoardManager : MonoBehaviour
 
 		groupColors = GenerateGroupColors(width + height - 2);
 
-		// Create tiles
 		for (int i = 1; i < width * height; i++)
 		{
 			int x = (i - 1) % width;
@@ -205,11 +206,9 @@ public class BoardManager : MonoBehaviour
 			tile.board = this;
 			tile.x = x;
 			tile.y = y;
-			
-			// Assign group colors
+
 			for (int j = 0; j < groupColors.Count; j++)
 			{
-				// first row then first column
 				if (j % 2 == 0 && y == j / 2 || j % 2 == 1 && x == j / 2)
 				{
 					tile.SetBackgroundColor(groupColors[j]);
@@ -222,6 +221,32 @@ public class BoardManager : MonoBehaviour
 			SetTileInstant(tile, x, y);
 			tile.UpdateLabelColor(width);
 		}
+	}
+
+	private IEnumerator ResetAnimate()
+	{
+		logic.ResetToSolved();
+
+		// Animate all tiles to solved positions
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				Tile tile = logic.board[y, x];
+				if (tile == null) continue;
+
+				tile.x = x;
+				tile.y = y;
+
+				Vector2 targetPos = GetTilePosition(x, y);
+				PlayTileAnimation(tile, targetPos, 0.25f);
+
+				tile.UpdateLabelColor(width);
+			}
+		}
+
+		while (activeAnimations.Count > 0)
+			yield return null;
 	}
 
 	private void HandleMove(Tile tile, Vector2Int from, Vector2Int to)
