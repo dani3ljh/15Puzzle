@@ -13,9 +13,9 @@ public class BoardManager : MonoBehaviour
 	[Header("Board")]
 	[SerializeField] private int width;
 	[SerializeField] private int height;
-	[SerializeField] private bool shuffleOnStart;
 
 	[Header("Canvas")]
+	[SerializeField] private Transform canvas;
 	[SerializeField] private RectTransform background;
 	[SerializeField] private Transform tileFolder;
 	[SerializeField] private TMP_Text timer;
@@ -26,6 +26,7 @@ public class BoardManager : MonoBehaviour
 
 	[Header("Prefabs")]
 	[SerializeField] private GameObject tilePrefab;
+	[SerializeField] private GameObject confirmationWindowPrefab;
 
 	[Header("Win Effect")]
 	[SerializeField] private ParticleSystem[] confetti;
@@ -37,16 +38,20 @@ public class BoardManager : MonoBehaviour
 	private float timeElapsed = 0;
 	private bool hasShuffled;
 	private bool timerRunning;
+	private ConfirmationWindow confirmationWindow;
+	public WindowType? windowType; //temp public
+	
+	public enum WindowType
+	{
+		Shuffle,
+		Reset
+	}
 
 	private void Start()
 	{
 		moveQueue = new();
 
 		ResetBoard();
-
-		// Shuffle with animation
-		if (shuffleOnStart)
-			ShuffleBoard();
 	}
 
 	private void Update()
@@ -68,9 +73,18 @@ public class BoardManager : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
 			moveQueue.Add(logic.MoveRight());
 		else if (Input.GetKeyDown(KeyCode.R))
-			ResetBoard();
+			TryResetBoard();
 		else if (Input.GetKeyDown(KeyCode.T))
-			ShuffleBoard();
+			TryShuffleBoard();
+		else if (Input.GetKeyDown(KeyCode.Escape) && confirmationWindow != null)
+			DestroyConfirmationWindow();
+		else if (Input.GetKeyDown(KeyCode.Return) && confirmationWindow != null)
+		{
+			if (windowType == WindowType.Reset)
+				TryResetBoard();
+			else if (windowType == WindowType.Shuffle)
+				TryShuffleBoard();
+		}
 
 		if (moveQueue.Count > 0)
 		{
@@ -151,6 +165,36 @@ public class BoardManager : MonoBehaviour
 		
 		return colors;
 	}
+	
+	public void TryShuffleBoard()
+	{
+		
+		if (confirmationWindow != null)
+			DestroyConfirmationWindow();
+		
+		if (!timerRunning)
+		{
+			ShuffleBoard();
+			return;
+		}
+		
+		confirmationWindow = Instantiate(confirmationWindowPrefab, canvas).GetComponent<ConfirmationWindow>();
+		confirmationWindow.SetHeaders("Shuffle Board?", "This will scramble the board and reset your timer.");
+		confirmationWindow.SetCallbacks(() =>
+		{
+			DestroyConfirmationWindow();
+			ShuffleBoard();
+		}, DestroyConfirmationWindow);
+		windowType = WindowType.Shuffle;
+		// PrintWindowType();
+	}
+	
+	private void DestroyConfirmationWindow()
+	{
+		Destroy(confirmationWindow.gameObject);
+		windowType = null;
+		// PrintWindowType();
+	}
 
 	public void ShuffleBoard()
 	{
@@ -164,6 +208,28 @@ public class BoardManager : MonoBehaviour
 
 		if (logic.CheckWin())
 			Win();
+	}
+	
+	public void TryResetBoard()
+	{
+		if (confirmationWindow != null)
+			DestroyConfirmationWindow();
+
+		if (!hasShuffled)
+		{
+			ResetBoard();
+			return;
+		}
+		
+		confirmationWindow = Instantiate(confirmationWindowPrefab, canvas).GetComponent<ConfirmationWindow>();
+		confirmationWindow.SetHeaders("Reset Board?", "This will solve the board and end your time.");
+		confirmationWindow.SetCallbacks(() =>
+		{
+			DestroyConfirmationWindow();
+			ResetBoard();
+		}, DestroyConfirmationWindow);
+		windowType = WindowType.Reset;
+		// PrintWindowType();
 	}
 
 	public void ResetBoard()
@@ -347,7 +413,7 @@ public class BoardManager : MonoBehaviour
 	[ContextMenu("Print Board State")]
 	private void PrintBoardState()
 	{
-		StringBuilder output = new StringBuilder();
+		StringBuilder output = new();
 
 		for (int y = 0; y < height; y++)
 		{
@@ -362,5 +428,11 @@ public class BoardManager : MonoBehaviour
 		}
 
 		print(output.ToString());
+	}
+	
+	[ContextMenu("Print Window Type")]
+	private void PrintWindowType()
+	{
+		print($"windowType: {(windowType == null ? "null" : windowType)}");
 	}
 }

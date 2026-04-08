@@ -5096,7 +5096,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2107488989}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: ShuffleBoard
+        m_MethodName: TryShuffleBoard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10866,7 +10866,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2107488989}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: ResetBoard
+        m_MethodName: TryResetBoard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11083,13 +11083,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 4
   height: 4
-  shuffleOnStart: 0
+  canvas: {fileID: 1724310493}
   background: {fileID: 558682657}
   tileFolder: {fileID: 939417729}
   timer: {fileID: 724393262}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   finishedColor: {r: 0.05265808, g: 1, b: 0, a: 1}
   tilePrefab: {fileID: 1808331265542707077, guid: 1a3a934a7e7ca0f4e8be05f004fe3035, type: 3}
+  confirmationWindowPrefab: {fileID: 3504268641903221452, guid: a569cf13ee6a52c40b34f25dbf201484, type: 3}
   confetti:
   - {fileID: 41117317}
   - {fileID: 495051599}
