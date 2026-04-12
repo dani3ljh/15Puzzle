@@ -14,13 +14,16 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private int width;
 	[SerializeField] private int height;
 
-	[Header("Canvas")]
+	[Header("Canvas Objects")]
 	[SerializeField] private Transform canvas;
 	[SerializeField] private RectTransform background;
 	[SerializeField] private Transform tileFolder;
-	[SerializeField] private TMP_Text timer;
 
-	[Header("Timer Colors")]
+	[Header("Canvas Labels")]
+	[SerializeField] private TMP_Text timerLabel;
+	[SerializeField] private TMP_Text moveCountLabel;
+
+	[Header("Label Colors")]
 	[SerializeField] private Color normalColor;
 	[SerializeField] private Color finishedColor;
 
@@ -35,7 +38,8 @@ public class BoardManager : MonoBehaviour
 	private Dictionary<Tile, Coroutine> activeAnimations = new();
 	private List<Color> groupColors;
 	private List<(Tile tile, Vector2Int from, Vector2Int to)?> moveQueue;
-	private float timeElapsed = 0;
+	private int moveCount;
+	private float timeElapsed;
 	private bool hasShuffled;
 	private bool timerRunning;
 	private ConfirmationWindow confirmationWindow;
@@ -61,7 +65,7 @@ public class BoardManager : MonoBehaviour
 			timeElapsed += Time.deltaTime;
 			int minutes = (int)(timeElapsed / 60);
 			float seconds = timeElapsed % 60;
-			timer.text = $"{minutes:D2}:{seconds:00.0}";
+			timerLabel.text = $"{minutes:D2}:{seconds:00.0}";
 		}
 
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -81,9 +85,10 @@ public class BoardManager : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.Return) && confirmationWindow != null)
 		{
 			if (windowType == WindowType.Reset)
-				TryResetBoard();
+				ResetBoard();
 			else if (windowType == WindowType.Shuffle)
-				TryShuffleBoard();
+				ShuffleBoard();
+			DestroyConfirmationWindow();
 		}
 
 		if (moveQueue.Count > 0)
@@ -93,6 +98,8 @@ public class BoardManager : MonoBehaviour
 
 			if (move == null)
 				return;
+			
+			SetMoves(moveCount + 1);
 			
 			if (hasShuffled && !timerRunning)
 				timerRunning = true;
@@ -108,9 +115,16 @@ public class BoardManager : MonoBehaviour
 	{
 		hasShuffled = false;
 		timerRunning = false;
-		timer.color = finishedColor;
+		timerLabel.color = finishedColor;
+		moveCountLabel.color = finishedColor;
 		for (int i = 0; i <confetti.Length; i++)
 			confetti[i].Play();
+	}
+
+	private void SetMoves(int moves)
+	{
+		moveCount = moves;
+		moveCountLabel.text = $"{moves}";
 	}
 
 	public void ButtonPress(int x, int y)
@@ -198,11 +212,16 @@ public class BoardManager : MonoBehaviour
 
 	public void ShuffleBoard()
 	{
+		print("shuffling");
 		hasShuffled = true;
 		timeElapsed = 0;
 		timerRunning = false;
-		timer.text = "00:00.0";
-		timer.color = normalColor;
+
+		timerLabel.text = "00:00.0";
+		timerLabel.color = normalColor;
+
+		SetMoves(0);
+		moveCountLabel.color = normalColor;
 		
 		StartCoroutine(ShuffleAnimate());
 
@@ -237,8 +256,12 @@ public class BoardManager : MonoBehaviour
 		hasShuffled = false;
 		timeElapsed = 0;
 		timerRunning = false;
-		timer.text = "00:00.0";
-		timer.color = normalColor;
+
+		timerLabel.text = "00:00.0";
+		timerLabel.color = normalColor;
+
+		SetMoves(0);
+		moveCountLabel.color = normalColor;
 
 		if (logic == null)
 		{
