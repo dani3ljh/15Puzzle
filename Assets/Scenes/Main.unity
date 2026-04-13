@@ -11292,8 +11292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c6c61a3aa10754a93b2c2b61e98fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 3
-  height: 3
+  width: 4
+  height: 4
   canvas: {fileID: 1724310493}
   background: {fileID: 558682657}
   tileFolder: {fileID: 939417729}
