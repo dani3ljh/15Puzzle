@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
@@ -31,6 +32,9 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private GameObject tilePrefab;
 	[SerializeField] private GameObject confirmationWindowPrefab;
 
+	[Header("Scene Manager")]
+	[SerializeField] private int menuSceneIndex;
+
 	[Header("Win Effect")]
 	[SerializeField] private ParticleSystem[] confetti;
 
@@ -53,6 +57,10 @@ public class BoardManager : MonoBehaviour
 
 	private void Start()
 	{
+		// default to (1, 1) to make empty screen if there's an error getting playerprefs
+		width = PlayerPrefs.GetInt("width", 1);
+		height = PlayerPrefs.GetInt("height", 1);
+
 		moveQueue = new();
 
 		ResetBoard();
@@ -212,7 +220,7 @@ public class BoardManager : MonoBehaviour
 
 	public void ShuffleBoard()
 	{
-		print("shuffling");
+		// print("shuffling");
 		hasShuffled = true;
 		timeElapsed = 0;
 		timerRunning = false;
@@ -227,6 +235,11 @@ public class BoardManager : MonoBehaviour
 
 		if (logic.CheckWin())
 			Win();
+	}
+
+	public void MenuButton()
+	{
+		SceneManager.LoadScene(menuSceneIndex);
 	}
 	
 	public void TryResetBoard()
