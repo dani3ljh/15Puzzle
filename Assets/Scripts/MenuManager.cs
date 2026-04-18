@@ -21,21 +21,11 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        int width = PlayerPrefs.GetInt("width", -1);
-        if (width == -1)
-        {
-            width = defaultWidth;
-            PlayerPrefs.SetInt("width", width);
-        }
+        int width = PlayerPrefs.GetInt("width", defaultWidth);
         widthSlider.value = width;
         UpdateWidth();
 
-        int height = PlayerPrefs.GetInt("height", -1);
-        if (height == -1)
-        {
-            height = defaultHeight;
-            PlayerPrefs.SetInt("height", height);
-        }
+        int height = PlayerPrefs.GetInt("height", defaultHeight);
         heightSlider.value = height;
         UpdateHeight();
     }
