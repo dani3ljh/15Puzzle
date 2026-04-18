@@ -27,6 +27,7 @@ public class MenuManager : MonoBehaviour
             width = defaultWidth;
             PlayerPrefs.SetInt("width", width);
         }
+        widthSlider.value = width;
         UpdateWidth();
 
         int height = PlayerPrefs.GetInt("height", -1);
@@ -35,7 +36,8 @@ public class MenuManager : MonoBehaviour
             height = defaultHeight;
             PlayerPrefs.SetInt("height", height);
         }
-    
+        heightSlider.value = height;
+        UpdateHeight();
     }
 
     public void UpdateWidth()
