@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
     [Header("Scene Manager")]
-    [SerializeField] private int sceneIndexToLoad;
+    [SerializeField] private int playSceneIndex;
+    [SerializeField] private int tutorialSceneIndex;
     
     [Header("Canvas")]
     [SerializeField] private Slider widthSlider;
@@ -54,11 +54,6 @@ public class MenuManager : MonoBehaviour
     {
         heightSlider.value += deltaHeight;
         UpdateHeight();
-    }
-
-    public void Play()
-    {
-        SceneManager.LoadScene(sceneIndexToLoad);
     }
 
     public void ResetPlayerPrefs()

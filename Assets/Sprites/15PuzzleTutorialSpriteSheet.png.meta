@@ -1,0 +1,479 @@
+fileFormatVersion: 2
+guid: bc82ef69954ca254a91bd7bf448eff7a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2347.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6e413c5cc82c6e43a27eee7dcb1e2db
+      internalID: 1149916621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 2347.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089dd4ce5a2c1744b9ca3ed2bb8f1ca4
+      internalID: 2072339721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 1564
+        y: 2347.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: def961fb414418c43932b56c7e3ecf47
+      internalID: -1784723707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 2346
+        y: 2347.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b54623856a1025746a6733cca3565ae3
+      internalID: -1600230691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1565.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1a9363dffc08a549948750d9b5652d9
+      internalID: -881517777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 1565.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1df4e225a7c4bdf45929df88c352fe59
+      internalID: 1072821866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 1564
+        y: 1565.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e002e25ea592ce44af9f24e15ef6315
+      internalID: -1540972717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 2346
+        y: 1565.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06b5a69b4f46a5945bda99f28e15c6f9
+      internalID: -2104173419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 783.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b087a8d0f763d7841ba5086a1132d325
+      internalID: -881135460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 783.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c860c635e17dd45b7afda91c35bdfe
+      internalID: 1221956616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 1564
+        y: 783.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c55bd92183d359649b98dbefe41dfd70
+      internalID: -1579053609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 2346
+        y: 783.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49298a88d04df3e44bcfff76d657d48e
+      internalID: -339125472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adecf79a2ba0ed74cbe62e3d59c21e28
+      internalID: -997633671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 1.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cfb5e9d3f0f0a947ab4bf12a13f3060
+      internalID: 35029078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 1564
+        y: 1.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce908307a61f3fa45b2a2c46e8d80b17
+      internalID: -1521183199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15PuzzleTutorialSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 2346
+        y: 1.5
+        width: 782.25
+        height: 782.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e5edbf787d8f1448413776290a62b9
+      internalID: 780658512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      15PuzzleTutorialSpriteSheet_0: 1149916621
+      15PuzzleTutorialSpriteSheet_1: 2072339721
+      15PuzzleTutorialSpriteSheet_10: -1579053609
+      15PuzzleTutorialSpriteSheet_11: -339125472
+      15PuzzleTutorialSpriteSheet_12: -997633671
+      15PuzzleTutorialSpriteSheet_13: 35029078
+      15PuzzleTutorialSpriteSheet_14: -1521183199
+      15PuzzleTutorialSpriteSheet_15: 780658512
+      15PuzzleTutorialSpriteSheet_2: -1784723707
+      15PuzzleTutorialSpriteSheet_3: -1600230691
+      15PuzzleTutorialSpriteSheet_4: -881517777
+      15PuzzleTutorialSpriteSheet_5: 1072821866
+      15PuzzleTutorialSpriteSheet_6: -1540972717
+      15PuzzleTutorialSpriteSheet_7: -2104173419
+      15PuzzleTutorialSpriteSheet_8: -881135460
+      15PuzzleTutorialSpriteSheet_9: 1221956616
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

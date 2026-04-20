@@ -12,15 +12,8 @@ public class LogicManager
 	private int height;
 	private BoardShuffler shuffler;
 
-	public int GetWidth()
-	{
-		return width;
-	}
-
-	public int GetHeight()
-	{
-		return height;
-	}
+	public int GetWidth() => width;
+	public int GetHeight() => height;
 
 	public LogicManager(int width, int height)
 	{

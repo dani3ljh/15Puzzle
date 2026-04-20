@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
@@ -32,16 +31,13 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private GameObject tilePrefab;
 	[SerializeField] private GameObject confirmationWindowPrefab;
 
-	[Header("Scene Manager")]
-	[SerializeField] private int menuSceneIndex;
-
 	[Header("Win Effect")]
 	[SerializeField] private ParticleSystem[] confetti;
 
 	private LogicManager logic;
 	private Dictionary<Tile, Coroutine> activeAnimations = new();
 	private List<Color> groupColors;
-	private List<(Tile tile, Vector2Int from, Vector2Int to)?> moveQueue;
+	private Queue<(Tile tile, Vector2Int from, Vector2Int to)?> moveQueue;
 	private int moveCount;
 	private float timeElapsed;
 	private bool hasShuffled;
@@ -77,13 +73,13 @@ public class BoardManager : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-			moveQueue.Add(logic.MoveUp());
+			moveQueue.Enqueue(logic.MoveUp());
 		else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
-			moveQueue.Add(logic.MoveDown());
+			moveQueue.Enqueue(logic.MoveDown());
 		else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-			moveQueue.Add(logic.MoveLeft());
+			moveQueue.Enqueue(logic.MoveLeft());
 		else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-			moveQueue.Add(logic.MoveRight());
+			moveQueue.Enqueue(logic.MoveRight());
 		else if (Input.GetKeyDown(KeyCode.R))
 			TryResetBoard();
 		else if (Input.GetKeyDown(KeyCode.T))
@@ -101,8 +97,7 @@ public class BoardManager : MonoBehaviour
 
 		if (moveQueue.Count > 0)
 		{
-			(Tile tile, Vector2Int from, Vector2Int to)? move = moveQueue[0];
-			moveQueue.RemoveAt(0);
+			(Tile tile, Vector2Int from, Vector2Int to)? move = moveQueue.Dequeue();
 
 			if (move == null)
 				return;
@@ -149,12 +144,12 @@ public class BoardManager : MonoBehaviour
 			if (y < gapIndicies.y)
 			{
 				for (int i = 0; i < gapIndicies.y - y; i++)
-					moveQueue.Add(logic.MoveDown());
+					moveQueue.Enqueue(logic.MoveDown());
 			}
 			else
 			{
 				for (int i = 0; i < y - gapIndicies.y; i++)
-					moveQueue.Add(logic.MoveUp());
+					moveQueue.Enqueue(logic.MoveUp());
 			}
 		}
 		else
@@ -162,12 +157,12 @@ public class BoardManager : MonoBehaviour
 			if (x < gapIndicies.x)
 			{
 				for (int i = 0; i < gapIndicies.x - x; i++)
-					moveQueue.Add(logic.MoveRight());
+					moveQueue.Enqueue(logic.MoveRight());
 			}
 			else
 			{
 				for (int i = 0; i < x - gapIndicies.x; i++)
-					moveQueue.Add(logic.MoveLeft());
+					moveQueue.Enqueue(logic.MoveLeft());
 			}
 		}
 	}
@@ -237,11 +232,6 @@ public class BoardManager : MonoBehaviour
 			Win();
 	}
 
-	public void MenuButton()
-	{
-		SceneManager.LoadScene(menuSceneIndex);
-	}
-	
 	public void TryResetBoard()
 	{
 		if (confirmationWindow != null)
@@ -444,31 +434,5 @@ public class BoardManager : MonoBehaviour
 
 		rect.anchoredPosition = targetPos;
 		activeAnimations.Remove(tile);
-	}
-
-	[ContextMenu("Print Board State")]
-	private void PrintBoardState()
-	{
-		StringBuilder output = new();
-
-		for (int y = 0; y < height; y++)
-		{
-			for (int x = 0; x < width; x++)
-			{
-				if (logic.board[y, x] == null)
-					output.Append("nu, ");
-				else
-					output.Append(logic.board[y, x].GetNumber().ToString("D2") + ", ");
-			}
-			output.Append("\n");
-		}
-
-		print(output.ToString());
-	}
-	
-	[ContextMenu("Print Window Type")]
-	private void PrintWindowType()
-	{
-		print($"windowType: {(windowType == null ? "null" : windowType)}");
 	}
 }

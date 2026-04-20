@@ -5227,16 +5227,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2107488989}
-        m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: MenuButton
-        m_Mode: 1
+      - m_Target: {fileID: 2107488991}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Menu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &126175117
@@ -11541,6 +11541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2107488990}
   - component: {fileID: 2107488989}
+  - component: {fileID: 2107488991}
   m_Layer: 0
   m_Name: BoardManager
   m_TagString: Untagged
@@ -11571,7 +11572,6 @@ MonoBehaviour:
   finishedColor: {r: 0.05265808, g: 1, b: 0, a: 1}
   tilePrefab: {fileID: 1808331265542707077, guid: 1a3a934a7e7ca0f4e8be05f004fe3035, type: 3}
   confirmationWindowPrefab: {fileID: 3504268641903221452, guid: a569cf13ee6a52c40b34f25dbf201484, type: 3}
-  menuSceneIndex: 0
   confetti:
   - {fileID: 41117317}
   - {fileID: 495051599}
@@ -11590,12 +11590,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2107488991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107488988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6923e2c85d0fe604084ce4c211e901b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 2107488990}
   - {fileID: 1724310493}
   - {fileID: 1327580256}
+  - {fileID: 2107488990}
   - {fileID: 1725682919}
