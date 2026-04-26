@@ -11570,6 +11570,7 @@ MonoBehaviour:
   moveCountLabel: {fileID: 1443972950}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   finishedColor: {r: 0.05265808, g: 1, b: 0, a: 1}
+  defaultTileColor: {r: 0.42767292, g: 0.42767292, b: 0.42767292, a: 1}
   tilePrefab: {fileID: 1808331265542707077, guid: 1a3a934a7e7ca0f4e8be05f004fe3035, type: 3}
   confirmationWindowPrefab: {fileID: 3504268641903221452, guid: a569cf13ee6a52c40b34f25dbf201484, type: 3}
   confetti:

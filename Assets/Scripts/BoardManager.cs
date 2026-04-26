@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using TMPro;
@@ -23,9 +24,10 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private TMP_Text timerLabel;
 	[SerializeField] private TMP_Text moveCountLabel;
 
-	[Header("Label Colors")]
+	[Header("Colors")]
 	[SerializeField] private Color normalColor;
 	[SerializeField] private Color finishedColor;
+	[SerializeField] private Color defaultTileColor;
 
 	[Header("Prefabs")]
 	[SerializeField] private GameObject tilePrefab;
@@ -169,6 +171,11 @@ public class BoardManager : MonoBehaviour
 	
 	private List<Color> GenerateGroupColors(int count)
 	{
+		int colorSetting = PlayerPrefs.GetInt("colors", 0);
+
+		if (colorSetting == 1) return Enumerable.Repeat(defaultTileColor, count).ToList();
+		if (colorSetting != 0) throw new Exception($"Color setting {colorSetting} not assigned");
+
 		List<Color> colors = new();
 		
 		for (int i = 0; i < count; i++)
