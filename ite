@@ -1,0 +1,125 @@
+[33mcommit a633a4fd96a54dc16fc5caa6e93fd7e29581683b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Sun Apr 26 15:50:27 2026 -0400
+
+    Added Settings
+
+[33mcommit 0877544b990957c00f17c170751c152f85da748c[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Tue Apr 21 19:16:53 2026 -0400
+
+    Added Keybinds to Tutorial
+
+[33mcommit b261c49ca661a43855e514ef9dcbd36ba08b8785[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Mon Apr 20 19:04:45 2026 -0400
+
+    Added Tutorial
+
+[33mcommit 48b21aba7c61c690ea0e7edaf489ca36e53595c5[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Sat Apr 18 04:24:39 2026 -0400
+
+    Simplify Slider Initialize
+
+[33mcommit b11ca00870eab04367c34704f50020cf8e41af3d[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Sat Apr 18 03:23:47 2026 -0400
+
+    Fixed Slider Updating
+
+[33mcommit ef903bcbca0c69b17854870b4e1419c49adf7e6c[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Thu Apr 16 23:07:30 2026 -0400
+
+    Change Menu UI
+
+[33mcommit be494124110cecee45e2d45d355d6a1d4a1d887f[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Wed Apr 15 19:27:19 2026 -0400
+
+    Add Menu
+
+[33mcommit 6b234f0dbab21a21b5e87fa003d09a57111b2f58[m
+Author: Daniel Hart <dnljh15@gmail.com>
+Date:   Mon Apr 13 09:10:16 2026 -0400
+
+    Set back to 4x4
+
+[33mcommit 5f1e44096eea3c5cbb603b2e88d780268780e49c[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Sun Apr 12 16:00:47 2026 -0400
+
+    Added Move Count
+
+[33mcommit ab8cfde98d03cf99c1f2118e2f67c240fa600fe0[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Tue Apr 7 23:36:23 2026 -0400
+
+    Added Confirmation Window
+
+[33mcommit 6f966b0650c746c6ee4c8efef9d8496ed6b99d32[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Sun Apr 5 02:14:21 2026 -0400
+
+    Fixed Timer
+
+[33mcommit b64f65695dd8ae0ae1b594d7ae5cca2840433697[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Sat Apr 4 15:33:49 2026 -0400
+
+    Added Timer
+
+[33mcommit 6d9dadd9f90e0e06eab0905b320493889e83f441[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Sat Apr 4 13:42:35 2026 -0400
+
+    Update README.md
+
+[33mcommit 2bf46004cf63d3c97af0a400c52f7fb8cbb23ca1[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Sat Apr 4 13:41:21 2026 -0400
+
+    UI Update (TMPro)
+
+[33mcommit 857d227821f7bd6bd010f904d63859596ec185dd[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Wed Apr 1 19:26:33 2026 -0400
+
+    Added Button Functionallity
+
+[33mcommit 9e9bb698a7e749628d545566f00f9dfd62765715[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Wed Apr 1 02:57:18 2026 -0400
+
+    Update READEME.md
+
+[33mcommit af6e24764d30bd23224793a2e80553f10d10b9d8[m
+Author: Daniel Hart <86760228+dani3ljh@users.noreply.github.com>
+Date:   Wed Apr 1 02:42:09 2026 -0400
+
+    Added Uniform Shuffling and UI changes
+
+[33mcommit 607114a6dff8100b38aa6ac9f30f2f78952cafc5[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Tue Mar 31 19:30:42 2026 -0400
+
+    Added Confetti and Group Colors
+
+[33mcommit 4e959f29e8351fe51374651ac11df3b73a86ec6a[m
+Author: dani3ljh <dnljh15@gmail.com>
+Date:   Wed Mar 25 19:33:10 2026 -0400
+
+    Updated UI
+
+[33mcommit 9d1056841b7ef3096166e89063938dfa4a573871[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Daniel Hart <dnljh15@gmail.com>
+Date:   Tue Mar 24 12:00:16 2026 -0400
+
+    Add project files.
+
+[33mcommit 5712e6b1266092c46aa5e4097abe0c2dcbb4f11d[m
+Author: Daniel Hart <dnljh15@gmail.com>
+Date:   Tue Mar 24 12:00:11 2026 -0400
+
+    Add .gitattributes, README.md, and LICENSE.txt.
