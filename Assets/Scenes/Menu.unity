@@ -462,8 +462,8 @@ RectTransform:
   - {fileID: 1761927856}
   - {fileID: 1315055095}
   - {fileID: 109510784}
-  - {fileID: 489376014}
   - {fileID: 1990761698}
+  - {fileID: 489376014}
   - {fileID: 1051453313}
   m_Father: {fileID: 1724310493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2255,7 +2255,7 @@ GameObject:
   - component: {fileID: 1051453315}
   - component: {fileID: 1051453314}
   m_Layer: 5
-  m_Name: TutorialButton (1)
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

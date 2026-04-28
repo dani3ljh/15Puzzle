@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
     
     private void UpdatePageLabel()
     {
-        pageLabel.text = $"{currPage+1}/{pages.Length}";
+        pageLabel.text = $"Page {currPage+1}/{pages.Length}";
     }
     
     public void NextPage()
