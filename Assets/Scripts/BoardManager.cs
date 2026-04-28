@@ -24,6 +24,10 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private TMP_Text timerLabel;
 	[SerializeField] private TMP_Text moveCountLabel;
 
+	[Header("Leaderboard Labels")]
+	[SerializeField] private TMP_Text averageLabel;
+	[SerializeField] private TMP_Text[] timeLabels;
+
 	[Header("Colors")]
 	[SerializeField] private Color normalColor;
 	[SerializeField] private Color finishedColor;
@@ -45,7 +49,8 @@ public class BoardManager : MonoBehaviour
 	private bool hasShuffled;
 	private bool timerRunning;
 	private ConfirmationWindow confirmationWindow;
-	public WindowType? windowType; //temp public
+	private WindowType? windowType;
+	private float?[] times;
 	
 	public enum WindowType
 	{
@@ -61,6 +66,8 @@ public class BoardManager : MonoBehaviour
 
 		moveQueue = new();
 
+		times = new float?[5];
+
 		ResetBoard();
 	}
 
@@ -69,9 +76,7 @@ public class BoardManager : MonoBehaviour
 		if (timerRunning)
 		{
 			timeElapsed += Time.deltaTime;
-			int minutes = (int)(timeElapsed / 60);
-			float seconds = timeElapsed % 60;
-			timerLabel.text = $"{minutes:D2}:{seconds:00.0}";
+			timerLabel.text = FormatTime(timeElapsed);
 		}
 
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
@@ -116,12 +121,53 @@ public class BoardManager : MonoBehaviour
 		}
 	}
 
+	private string FormatTime(float time)
+	{
+		int minutes = (int)(time / 60);
+		float seconds = time % 60;
+		return $"{minutes:D2}:{seconds:00.0}";
+	}
+
+	private void AddTime(float time)
+	{
+		// move all times forward
+		for (int i = times.Length - 1; i > 0 ; i--)
+		{
+			times[i] = times[i - 1];
+			// timeLabels[i].text = times[i] == null ? "-" : FormatTime(times[i]);
+			if (times[i] == null)
+				timeLabels[i].text = "-";
+			else
+				timeLabels[i].text = FormatTime(times[i].Value);
+		}
+		
+		// add time
+		times[0] = time;
+		timeLabels[0].text = FormatTime(time);
+
+		if (times[4] == null)
+			return;
+
+		// average times
+		float sum = 0;
+
+		for (int i = 0; i < times.Length; i++)
+		{
+			sum += times[i].Value;
+		}
+
+		averageLabel.text = FormatTime(sum / 5);
+	}
+
 	private void Win()
 	{
 		hasShuffled = false;
 		timerRunning = false;
 		timerLabel.color = finishedColor;
 		moveCountLabel.color = finishedColor;
+
+		AddTime(timeElapsed);
+
 		for (int i = 0; i <confetti.Length; i++)
 			confetti[i].Play();
 	}
