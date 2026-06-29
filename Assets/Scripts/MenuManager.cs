@@ -8,6 +8,9 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private int playSceneIndex;
     [SerializeField] private int tutorialSceneIndex;
     
+    [Header("Script References")]
+    [SerializeField] private AudioManager audioManager;
+    
     [Header("Canvas")]
     [SerializeField] private Slider widthSlider;
     [SerializeField] private Slider heightSlider;
@@ -41,6 +44,8 @@ public class MenuManager : MonoBehaviour
     {
         widthSlider.value += deltaWidth;
         UpdateWidth();
+        
+        audioManager.PlaySound("click");
     }
 
     public void UpdateHeight()
@@ -54,6 +59,8 @@ public class MenuManager : MonoBehaviour
     {
         heightSlider.value += deltaHeight;
         UpdateHeight();
+        
+        audioManager.PlaySound("click");
     }
 
     public void ResetPlayerPrefs()
@@ -70,5 +77,7 @@ public class MenuManager : MonoBehaviour
         heightSlider.value = size;
         UpdateWidth();
         UpdateHeight();
+        
+        audioManager.PlaySound("click");
     }
 }

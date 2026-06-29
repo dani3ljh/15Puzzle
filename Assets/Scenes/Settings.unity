@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45.15
+  m_fontSize: 63.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -2.5734558, w: 0}
+  m_margin: {x: 0, y: -20.724993, z: -2.5734558, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1877,6 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6923e2c85d0fe604084ce4c211e901b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 1865124314}
 --- !u!114 &1540114840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1992,6 +1993,74 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &1865124313
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2537655366805779255, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7382455493393116908, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+--- !u!114 &1865124314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6519841421322594953, guid: e7aac61d7dc2bf8498dc90dbb7dbba85, type: 3}
+  m_PrefabInstance: {fileID: 1865124313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd11019e0b23054f8e2f3272153db8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2136857524
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,12 +2145,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 78.55
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 175.04
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -2134,3 +2203,4 @@ SceneRoots:
   - {fileID: 1724310493}
   - {fileID: 1327580256}
   - {fileID: 1540114838}
+  - {fileID: 1865124313}

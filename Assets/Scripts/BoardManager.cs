@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using TMPro;
 
@@ -19,6 +18,9 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private Transform canvas;
 	[SerializeField] private RectTransform background;
 	[SerializeField] private Transform tileFolder;
+	
+	[Header("Script References")]
+	[SerializeField] private AudioManager audioManager;
 
 	[Header("Canvas Labels")]
 	[SerializeField] private TMP_Text timerLabel;
@@ -115,6 +117,8 @@ public class BoardManager : MonoBehaviour
 				timerRunning = true;
 
 			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
+			
+			audioManager.PlaySound("tile");
 
 			if (move.Value.tile.GetCorrect(logic.GetWidth()) && logic.CheckWin() && hasShuffled)
 				Win();
@@ -167,6 +171,8 @@ public class BoardManager : MonoBehaviour
 		moveCountLabel.color = finishedColor;
 
 		AddTime(timeElapsed);
+		
+		audioManager.PlaySound("fnafYay");
 
 		for (int i = 0; i <confetti.Length; i++)
 			confetti[i].Play();
@@ -186,6 +192,8 @@ public class BoardManager : MonoBehaviour
 
 		if (x != gapIndicies.x && y != gapIndicies.y)
 			return;
+		
+		audioManager.PlaySound("click");
 		
 		if (x == gapIndicies.x)
 		{
@@ -278,6 +286,8 @@ public class BoardManager : MonoBehaviour
 
 		SetMoves(0);
 		moveCountLabel.color = normalColor;
+
+		audioManager.PlaySound("stoneSlide");
 		
 		StartCoroutine(ShuffleAnimate());
 
@@ -324,6 +334,8 @@ public class BoardManager : MonoBehaviour
 			InitializeBoard();
 			return;
 		}
+
+		audioManager.PlaySound("stoneSlide");
 
 		StartCoroutine(ResetAnimate());
 	}
