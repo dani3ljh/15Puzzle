@@ -7,7 +7,7 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        colorSetting.value = PlayerPrefs.GetInt("colors", 0);
+        colorSetting.value = PlayerPrefs.GetInt("colors", 1);
     }
 
     public void ValueChanged(int value)

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using TMPro;
 
@@ -225,11 +224,6 @@ public class BoardManager : MonoBehaviour
 	
 	private List<Color> GenerateGroupColors(int count)
 	{
-		int colorSetting = PlayerPrefs.GetInt("colors", 0);
-
-		if (colorSetting == 1) return Enumerable.Repeat(defaultTileColor, count).ToList();
-		if (colorSetting != 0) throw new Exception($"Color setting {colorSetting} not assigned");
-
 		List<Color> colors = new();
 		
 		for (int i = 0; i < count; i++)
@@ -242,6 +236,35 @@ public class BoardManager : MonoBehaviour
 		}
 		
 		return colors;
+	}
+	
+	private void ColorTileByGroup(Tile tile, int x, int y)
+	{
+		// Assign Group Colors if doesn't exist
+		groupColors ??= GenerateGroupColors(width + height - 2);
+		
+		for (int j = 0; j < groupColors.Count; j++)
+		{
+			if (j % 2 == 0 && y == j / 2 || j % 2 == 1 && x == j / 2)
+			{
+				tile.SetBackgroundColor(groupColors[j]);
+				return;
+			}
+		}
+	}
+	
+	private void ColorTileDefaultColor(Tile tile)
+	{
+		tile.SetBackgroundColor(defaultTileColor);
+	}
+	
+	private void ColorTileWithGradient(Tile tile, int x, int y)
+	{
+		float red = 1 - (float)x / width;
+		float blue = (float)x / width;
+		float green = (float) y / height;
+		
+		tile.SetBackgroundColor(new(red, green, blue, 0.7f));
 	}
 	
 	public void TryShuffleBoard()
@@ -350,8 +373,6 @@ public class BoardManager : MonoBehaviour
 		if (background.sizeDelta.x <= 0 || background.sizeDelta.y <= 0)
 			throw new Exception("Background Size improper size");
 
-		groupColors = GenerateGroupColors(width + height - 2);
-
 		for (int i = 1; i < width * height; i++)
 		{
 			int x = (i - 1) % width;
@@ -364,13 +385,20 @@ public class BoardManager : MonoBehaviour
 			tile.x = x;
 			tile.y = y;
 
-			for (int j = 0; j < groupColors.Count; j++)
-			{
-				if (j % 2 == 0 && y == j / 2 || j % 2 == 1 && x == j / 2)
-				{
-					tile.SetBackgroundColor(groupColors[j]);
-					break;
-				}
+			int colorSetting = PlayerPrefs.GetInt("colors", 1);
+
+			// if (colorSetting == 1) return Enumerable.Repeat(defaultTileColor, count).ToList();
+			// if (colorSetting != 0) throw new Exception($"Color setting {colorSetting} not assigned");
+
+			if (colorSetting == 0)
+				ColorTileDefaultColor(tile);
+			else if (colorSetting == 1)
+				ColorTileByGroup(tile, x, y);
+			else if (colorSetting == 2)
+				ColorTileWithGradient(tile, x, y);
+			else {
+				Debug.LogWarning($"colorSetting: {colorSetting} not implemented");
+				ColorTileDefaultColor(tile);
 			}
 
 			logic.board[y, x] = tile;

@@ -1393,9 +1393,11 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: None
+      m_Image: {fileID: 0}
     - m_Text: Groups
       m_Image: {fileID: 0}
-    - m_Text: None
+    - m_Text: Gradient
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2118,7 +2120,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Groups
+  m_text: None
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c37c9cb33e29be4e866bf274e5f86f0, type: 2}
   m_sharedMaterial: {fileID: -2366323530047185864, guid: 8c37c9cb33e29be4e866bf274e5f86f0, type: 2}
