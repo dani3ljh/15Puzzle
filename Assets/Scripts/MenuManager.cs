@@ -17,13 +17,19 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TMP_Text widthLabel;
     [SerializeField] private TMP_Text heightLabel;
     
-    [Header("Board")]
+    [Header("Defaults")]
+    [SerializeField] private int defaultColorMode = 1;
     [SerializeField] private int defaultWidth = 4;
     [SerializeField] private int defaultHeight = 4;
 
     // Start is called before the first frame update
     private void Start()
     {
+        if (!PlayerPrefs.HasKey("colors")) 
+            PlayerPrefs.SetInt("colors", defaultColorMode);
+        if (!PlayerPrefs.HasKey("sfx"))
+            PlayerPrefs.SetInt("sfx", 1); // 1 for on, 0 for off
+
         int width = PlayerPrefs.GetInt("width", defaultWidth);
         widthSlider.value = width;
         UpdateWidth();

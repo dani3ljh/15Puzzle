@@ -9,16 +9,27 @@ public class SceneLoader : MonoBehaviour
 {
     // yes I know the audio should be wrapped in another class but i dont wanna
     [SerializeField] private AudioManager audioManager;
+    
+    public bool sfxSetting;
+    
+    private void Start()
+    {
+        sfxSetting = PlayerPrefs.GetInt("sfx") == 1;
+    }
 
     public void LoadScene(int index) {
-        float length = audioManager.PlaySound("click");
-
-        StartCoroutine(LoadSceneAfterTime(length, index));
+        if (sfxSetting) {
+            float length = audioManager.PlaySound("click");
+            StartCoroutine(LoadSceneAfterTime(length, index));
+        } else
+            SceneManager.LoadScene(index);
     }
     public void LoadScene(string name) {
-        float length = audioManager.PlaySound("click");
-
-        StartCoroutine(LoadSceneAfterTime(length, name));
+        if (sfxSetting) {
+            float length = audioManager.PlaySound("click");
+            StartCoroutine(LoadSceneAfterTime(length, name));
+        } else
+            SceneManager.LoadScene(name);
     }
     
     private IEnumerator LoadSceneAfterTime(float timeSeconds, int index) {

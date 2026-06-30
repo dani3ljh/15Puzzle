@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// Handles UI and animations for the puzzle
@@ -42,7 +44,7 @@ public class BoardManager : MonoBehaviour
 	[SerializeField] private ParticleSystem[] confetti;
 
 	private LogicManager logic;
-	private Dictionary<Tile, Coroutine> activeAnimations = new();
+	private readonly Dictionary<Tile, Coroutine> activeAnimations = new();
 	private List<Color> groupColors;
 	private Queue<(Tile tile, Vector2Int from, Vector2Int to)?> moveQueue;
 	private int moveCount;
@@ -52,6 +54,7 @@ public class BoardManager : MonoBehaviour
 	private ConfirmationWindow confirmationWindow;
 	private WindowType? windowType;
 	private float?[] times;
+	private bool sfxSetting;
 	
 	public enum WindowType
 	{
@@ -64,6 +67,8 @@ public class BoardManager : MonoBehaviour
 		// default to (1, 1) to make empty screen if there's an error getting playerprefs
 		width = PlayerPrefs.GetInt("width", 1);
 		height = PlayerPrefs.GetInt("height", 1);
+		
+		sfxSetting = PlayerPrefs.GetInt("sfx") == 1;
 
 		moveQueue = new();
 
@@ -117,7 +122,8 @@ public class BoardManager : MonoBehaviour
 
 			HandleMove(move.Value.tile, move.Value.from, move.Value.to);
 			
-			audioManager.PlaySound("tile");
+			if (sfxSetting)
+				audioManager.PlaySound("tile");
 
 			if (move.Value.tile.GetCorrect(logic.GetWidth()) && logic.CheckWin() && hasShuffled)
 				Win();
@@ -171,7 +177,8 @@ public class BoardManager : MonoBehaviour
 
 		AddTime(timeElapsed);
 		
-		audioManager.PlaySound("fnafYay");
+		if (sfxSetting)
+			audioManager.PlaySound("fnafYay");
 
 		for (int i = 0; i <confetti.Length; i++)
 			confetti[i].Play();
@@ -192,7 +199,8 @@ public class BoardManager : MonoBehaviour
 		if (x != gapIndicies.x && y != gapIndicies.y)
 			return;
 		
-		audioManager.PlaySound("click");
+		if (sfxSetting)
+			audioManager.PlaySound("click");
 		
 		if (x == gapIndicies.x)
 		{
@@ -240,8 +248,10 @@ public class BoardManager : MonoBehaviour
 	
 	private void ColorTileByGroup(Tile tile, int x, int y)
 	{
-		// Assign Group Colors if doesn't exist
-		groupColors ??= GenerateGroupColors(width + height - 2);
+		// Assign Group Colors if doesn't exist or is wrong amount
+		int count = width + height - 2;
+		if (groupColors == null || groupColors.Count != count)
+			groupColors = GenerateGroupColors(count);
 		
 		for (int j = 0; j < groupColors.Count; j++)
 		{
@@ -265,6 +275,22 @@ public class BoardManager : MonoBehaviour
 		float green = (float) y / height;
 		
 		tile.SetBackgroundColor(new(red, green, blue, 0.7f));
+	}
+	
+	private void ColorTileByRow(Tile tile, int y)
+	{
+		if (groupColors == null || groupColors.Count != height)
+			groupColors = GenerateGroupColors(height);
+		
+		tile.SetBackgroundColor(groupColors[y]);
+	}
+
+	private void ColorTileByColumn(Tile tile, int x)
+	{
+		if (groupColors == null || groupColors.Count != width)
+			groupColors = GenerateGroupColors(width);
+		
+		tile.SetBackgroundColor(groupColors[x]);
 	}
 	
 	public void TryShuffleBoard()
@@ -310,7 +336,8 @@ public class BoardManager : MonoBehaviour
 		SetMoves(0);
 		moveCountLabel.color = normalColor;
 
-		audioManager.PlaySound("stoneSlide");
+		if (sfxSetting)
+			audioManager.PlaySound("stoneSlide");
 		
 		StartCoroutine(ShuffleAnimate());
 
@@ -358,7 +385,8 @@ public class BoardManager : MonoBehaviour
 			return;
 		}
 
-		audioManager.PlaySound("stoneSlide");
+		if (sfxSetting)
+			audioManager.PlaySound("stoneSlide");
 
 		StartCoroutine(ResetAnimate());
 	}
@@ -385,7 +413,7 @@ public class BoardManager : MonoBehaviour
 			tile.x = x;
 			tile.y = y;
 
-			int colorSetting = PlayerPrefs.GetInt("colors", 1);
+			int colorSetting = PlayerPrefs.GetInt("colors");
 
 			// if (colorSetting == 1) return Enumerable.Repeat(defaultTileColor, count).ToList();
 			// if (colorSetting != 0) throw new Exception($"Color setting {colorSetting} not assigned");
@@ -396,6 +424,10 @@ public class BoardManager : MonoBehaviour
 				ColorTileByGroup(tile, x, y);
 			else if (colorSetting == 2)
 				ColorTileWithGradient(tile, x, y);
+			else if (colorSetting == 3)
+				ColorTileByRow(tile, y);
+			else if (colorSetting == 4)
+				ColorTileByColumn(tile, x);
 			else {
 				Debug.LogWarning($"colorSetting: {colorSetting} not implemented");
 				ColorTileDefaultColor(tile);
